@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Livewire\Categories\Index;
+use App\Livewire\Categories\Create;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
     
     Route::get('categories', Index::class)->name('categories.index');
+    Route::get('categories/create', Create::class)->name('categories.create');
 });
 
 require __DIR__.'/auth.php';
