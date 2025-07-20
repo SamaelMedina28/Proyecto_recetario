@@ -1,7 +1,7 @@
 <div>
     <h1 class="text-2xl font-bold mb-4">{{ __('Recipes') }}</h1>
     <div class="mb-4">
-        <x-input type="text" placeholder="{{ __('Search recipes...') }}" />
+        <x-input type="text" wire:model.live="search" placeholder="{{ __('Search recipes...') }}" />
     </div>
     <div class="flex flex-col justify-center gap-4">
         @foreach ($recipes as $recipe)
