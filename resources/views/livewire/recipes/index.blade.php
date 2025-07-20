@@ -17,7 +17,7 @@
                 </div>
                 <div class="h-16 flex items-center px-2 bg-blue-500 text-white rounded-r">
                     <a href="#"
-                        class="">{{ __('View Recipe') }}</a>
+                        class="">{{ __('View') }}</a>
                 </div>
             </div>
         @endforeach
