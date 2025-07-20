@@ -19,9 +19,13 @@ class Index extends Component
         return view('livewire.categories.index', compact('categories'));
     }
 
+    public function setModal($value)
+    {
+        $this->showModal = $value;
+    }
     public function edit($id)
     {
-        $this->showModal = true;
+        $this->setModal(true);
         $this->name = Category::find($id)->name;
         $this->id = $id;
     }

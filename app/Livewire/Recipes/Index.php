@@ -18,10 +18,15 @@ class Index extends Component
     public function render()
     {
         $recipes = Recipe::with('category')
-            ->when($this->search, function ($query) {
-                $query->where('name', 'ilike', '%' . $this->search . '%'); 
+            ->where('user_id', Auth::id())
+            ->when($this->search, function ($consulta) {
+                $consulta->where(function ($query) {
+                    $query->where('recipes.name', 'like', '%' . $this->search . '%')
+                        ->orWhereHas('category', function ($categoryQuery) {
+                            $categoryQuery->where('name', 'like', '%' . $this->search . '%');
+                        });
+                });
             })
-            ->whereBelongsTo(Auth::user()) 
             ->latest()
             ->paginate(7);
         return view('livewire.recipes.index', [

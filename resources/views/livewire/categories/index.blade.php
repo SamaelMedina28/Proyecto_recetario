@@ -27,7 +27,7 @@
                     <div
                         class="flex justify-between items-center bg-white dark:bg-zinc-800 rounded-xl shadow-sm hover:shadow-md p-4 transition-all duration-300 border border-gray-100 dark:border-zinc-700 group-hover:border-gray-200 dark:group-hover:border-zinc-600">
                         <span class="text-lg font-medium text-gray-700 dark:text-gray-200">{{ $category->name }}</span>
-                        <div class="flex gap-3">
+                        <div class="flex gap-2">
                             <button id="boton" wire:click="edit({{ $category->id }})"
                                 class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-2 sm:px-4 rounded-full sm:rounded-lg transition-all duration-200 transform hover:scale-[1.03] shadow hover:shadow-md text-sm">
                                 <span class="hidden sm:inline">{{ __('Edit') }}</span>
@@ -129,8 +129,9 @@
                 @error('name')
                     <span class="text-red-500">{{ $message }}</span>
                 @enderror
-                <div class="flex justify-end mt-4">
-                    <flux:button variant="primary" type="submit">{{ __('Save') }}</flux:button>
+                <div class="flex justify-end mt-4 gap-2">
+                    <x-button wire:click="setModal(false)">{{ __('Cancel') }}</x-button>
+                    <x-button variant="primary" type="submit">{{ __('Save') }}</x-button>
                 </div>
             </form>
         </div>
