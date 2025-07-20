@@ -40,7 +40,7 @@ class Index extends Component
             'name' => $this->name,
         ]);
         $this->dispatch('alert', type: 'success', message: 'Category updated successfully');
-        $this->showModal = false;
+        $this->setModal(false);
     }
 
     public function delete($id)
