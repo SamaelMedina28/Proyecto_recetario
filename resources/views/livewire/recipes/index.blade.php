@@ -44,7 +44,7 @@
                         <!-- Imagen -->
                         <div class="w-full sm:w-32 h-32 sm:h-auto flex-shrink-0">
                             <img 
-                                src="{{ $recipe->image_path ? asset('storage/' . $recipe->image_path) : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png' }}" 
+                                src="{{ $recipe->image_path ? asset('storage/' . $recipe->image_path) : asset('img/recipe-placeholder.jpg') }}" 
                                 alt="{{ $recipe->name }}" 
                                 class="h-full w-full sm:max-h-40 object-cover"
                             >

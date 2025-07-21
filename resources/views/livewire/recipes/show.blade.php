@@ -71,7 +71,7 @@
     </div>
 
     <!-- Acciones (opcional) -->
-    <div class="flex justify-end space-x-4">
+    <div class="flex justify-end space-x-2 my-4">
         <flux:button variant="danger" wire:confirm="{{ __('Are you sure you want to delete this recipe?') }}"
             wire:click="delete({{ $recipe->id }})">
             {{ __('Delete') }}

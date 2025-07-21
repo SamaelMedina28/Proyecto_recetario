@@ -1,6 +1,6 @@
 <div class="max-w-4xl mx-auto px-4">
     <!-- Encabezado y breadcrumbs -->
-    <div class="flex flex-col space-y-4 mb-6">
+    <div class="flex flex-col space-y-4 mb-3">
         <flux:breadcrumbs>
             <flux:breadcrumbs.item href="{{ route('dashboard') }}" wire:navigate>{{ __('Recipes') }}
             </flux:breadcrumbs.item>
@@ -11,7 +11,6 @@
 
         <div class="flex flex-col">
             <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">{{ __('Edit Recipe') }}</h1>
-            <p class="text-gray-500 dark:text-gray-400 mt-1">{{ __('Update your recipe details') }}</p>
         </div>
     </div>
 
@@ -211,6 +210,9 @@
                             toolbar: [
                                 [{
                                     'header': [1, 2, 3, false]
+                                }],
+                                [{
+                                    'size': []
                                 }],
                                 ['bold', 'italic', 'underline', 'strike'],
                                 [{
