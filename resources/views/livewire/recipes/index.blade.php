@@ -18,7 +18,7 @@
                     variant="primary" 
                     href="{{ route('recipes.create') }}"
                 >
-                    {{ __('Create') }}
+                    {{ __('Add') }}
                 </flux:button>
             </div>
         </div>
@@ -83,6 +83,6 @@
 
     <!-- Paginación -->
     <div class="mt-6">
-        {{ $recipes->links() }}
+        {{ $recipes->links(data: ['scrollTo' => false]) }}
     </div>
 </div>

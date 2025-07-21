@@ -54,7 +54,8 @@
                     </x-label>
                     <div class="mt-1 relative">
                         <!-- Contenedor del editor Quill -->
-                        <div id="quill-editor-ingredients" wire:ignore style="height: 100px;">
+                        <div id="quill-editor-ingredients" wire:ignore style="height: 100px;"
+                            class="dark:bg-zinc-700 dark:text-gray-100 dark:border-zinc-600">
                         </div>
                         <!-- Input oculto para Livewire -->
                         <input type="text" id="quill-content-ingredients" wire:model="ingredients">
@@ -73,7 +74,8 @@
                     </x-label>
                     <div class="mt-1 relative">
                         <!-- Contenedor del editor Quill -->
-                        <div id="quill-editor-instructions" wire:ignore style="height: 100px;">
+                        <div id="quill-editor-instructions" wire:ignore style="height: 100px;"
+                            class="dark:bg-zinc-700 dark:text-gray-100 dark:border-zinc-600">
                         </div>
                         <!-- Input oculto para Livewire -->
                         <input type="text" id="quill-content-instructions" wire:model="instructions">
@@ -126,6 +128,40 @@
             </div>
         </div>
     </form>
+    <style>
+        /* Override Quill styles for dark mode */
+        .dark .ql-toolbar {
+            background-color: #2d2d2f !important;
+            /* zinc-700 */
+            border-color: #52525b !important;
+            /* zinc-600 */
+        }
+
+        .dark .ql-container {
+            border-color: #52525b !important;
+            /* zinc-600 */
+        }
+
+        .dark .ql-editor {
+            color: #f4f4f5 !important;
+            /* zinc-100 */
+        }
+
+        .dark .ql-snow .ql-stroke {
+            stroke: #f4f4f5 !important;
+            /* zinc-100 */
+        }
+
+        .dark .ql-snow .ql-fill {
+            fill: #f4f4f5 !important;
+            /* zinc-100 */
+        }
+
+        .dark .ql-snow .ql-picker {
+            color: #f4f4f5 !important;
+            /* zinc-100 */
+        }
+    </style>
     <script>
         document.addEventListener('livewire:initialized', () => {
             // Inicializar Quill cuando Livewire esté listo
