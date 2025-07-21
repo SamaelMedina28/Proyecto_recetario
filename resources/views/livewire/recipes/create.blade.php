@@ -19,6 +19,7 @@
                 <x-label for="name">
                     {{ __('Recipe Name') }}
                 </x-label>
+                {{-- * --}}
                 <div class="mt-1 relative">
                     <x-input wire:model="name" id="name" type="text" class="block w-full"
                         placeholder="{{ __('e.g. Chocolate Cake, Spaghetti Carbonara') }}" />
@@ -33,7 +34,7 @@
                     {{ __('Category') }}
                 </x-label>
                 <div class="mt-1 relative">
-                    <flux:select placeholder="Choose industry...">
+                    <flux:select placeholder="Choose industry..." wire:model="category_id">
                         @foreach ($categories as $category)
                             <flux:select.option wire:key="{{ $category->id }}" value="{{ $category->id }}">
                                 {{ $category->name }}</flux:select.option>
@@ -163,89 +164,97 @@
         }
     </style>
     <script>
-        document.addEventListener('livewire:initialized', () => {
-            // Inicializar Quill cuando Livewire esté listo
+        document.addEventListener('livewire:init', () => {
+            let quillIngredients, quillInstructions;
 
-            const quillIngredients = new Quill('#quill-editor-ingredients', {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{
-                            'header': [1, 2, 3, 4, 5, 6, false]
-                        }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{
-                            'list': 'ordered'
-                        }, {
-                            'list': 'bullet'
-                        }],
-                        [{
-                            'script': 'sub'
-                        }, {
-                            'script': 'super'
-                        }],
-                        [{
-                            'indent': '-1'
-                        }, {
-                            'indent': '+1'
-                        }],
-                        [{
-                            'color': []
-                        }],
-                        [{
-                            'align': []
-                        }],
-                        ['link']
-                    ]
+            function initQuillEditors() {
+                // Destruir editores existentes si los hay
+                if (quillIngredients) {
+                    quillIngredients = null;
                 }
-            });
-
-            // Actualizar el campo hidden cuando el contenido cambie
-            quillIngredients.on('text-change', function() {
-                const content = document.getElementById('quill-content-ingredients');
-                content.value = quillIngredients.root.innerHTML;
-                content.dispatchEvent(new Event('input'));
-            });
-
-            const quillInstructions = new Quill('#quill-editor-instructions', {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{
-                            'header': [1, 2, 3, 4, 5, 6, false]
-                        }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{
-                            'list': 'ordered'
-                        }, {
-                            'list': 'bullet'
-                        }],
-                        [{
-                            'script': 'sub'
-                        }, {
-                            'script': 'super'
-                        }],
-                        [{
-                            'indent': '-1'
-                        }, {
-                            'indent': '+1'
-                        }],
-                        [{
-                            'color': []
-                        }],
-                        [{
-                            'align': []
-                        }],
-                        ['link']
-                    ]
+                if (quillInstructions) {
+                    quillInstructions = null;
                 }
-            });
 
-            // Actualizar el campo hidden cuando el contenido cambie
-            quillInstructions.on('text-change', function() {
-                const content = document.getElementById('quill-content-instructions');
-                content.value = quillInstructions.root.innerHTML;
-                content.dispatchEvent(new Event('input'));
+                // Inicializar editor de ingredientes
+                quillIngredients = new Quill('#quill-editor-ingredients', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{
+                                'header': [1, 2, 3, 4, 5, 6, false]
+                            }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{
+                                'list': 'ordered'
+                            }, {
+                                'list': 'bullet'
+                            }],
+                            [{
+                                'color': []
+                            }],
+                            ['link']
+                        ]
+                    }
+                });
+
+                // Inicializar editor de instrucciones
+                quillInstructions = new Quill('#quill-editor-instructions', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{
+                                'header': [1, 2, 3, 4, 5, 6, false]
+                            }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{
+                                'list': 'ordered'
+                            }, {
+                                'list': 'bullet'
+                            }],
+                            [{
+                                'color': []
+                            }],
+                            ['link']
+                        ]
+                    }
+                });
+
+                // Cargar contenido existente si hay
+                @if (old('ingredients'))
+                    quillIngredients.root.innerHTML = @js(old('ingredients'));
+                @endif
+
+                @if (old('instructions'))
+                    quillInstructions.root.innerHTML = @js(old('instructions'));
+                @endif
+
+                // Configurar eventos para sincronización con Livewire
+                quillIngredients.on('text-change', function() {
+                    document.getElementById('quill-content-ingredients').value = quillIngredients.root
+                        .innerHTML;
+                    document.getElementById('quill-content-ingredients').dispatchEvent(new Event('input'));
+                });
+
+                quillInstructions.on('text-change', function() {
+                    document.getElementById('quill-content-instructions').value = quillInstructions.root
+                        .innerHTML;
+                    document.getElementById('quill-content-instructions').dispatchEvent(new Event('input'));
+                });
+            }
+
+            // Inicializar editores al cargar
+            initQuillEditors();
+
+            // Reinicializar editores cuando Livewire actualice el DOM
+            Livewire.hook('commit', ({
+                component,
+                succeed
+            }) => {
+                succeed(() => {
+                    // Pequeño retraso para asegurar que el DOM esté listo
+                    setTimeout(initQuillEditors, 50);
+                });
             });
         });
     </script>
