@@ -48,17 +48,21 @@
 
             <!-- Campo Ingredientes -->
             <div>
-                <x-label for="ingredients">
-                    {{ __('Ingredients') }}
-                </x-label>
-                <div class="mt-1 relative">
-                    <textarea wire:model="ingredients" id="ingredients" rows="4"
-                        class="block w-full rounded-md border-gray-300 dark:border-zinc-600 dark:bg-zinc-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:text-white"
-                        placeholder="{{ __('List each ingredient on a new line') }}"></textarea>
+                <div>
+                    <x-label for="ingredients">
+                        {{ __('Ingredients') }}
+                    </x-label>
+                    <div class="mt-1 relative">
+                        <!-- Contenedor del editor Quill -->
+                        <div id="quill-editor-ingredients" wire:ignore style="height: 100px;">
+                        </div>
+                        <!-- Input oculto para Livewire -->
+                        <input type="text" id="quill-content-ingredients" wire:model="ingredients">
+                    </div>
+                    @error('ingredients')
+                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
                 </div>
-                @error('ingredients')
-                    <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- Campo Instrucciones -->
@@ -69,10 +73,10 @@
                     </x-label>
                     <div class="mt-1 relative">
                         <!-- Contenedor del editor Quill -->
-                        <div id="quill-editor" wire:ignore style="height: 100px;">
+                        <div id="quill-editor-instructions" wire:ignore style="height: 100px;">
                         </div>
                         <!-- Input oculto para Livewire -->
-                        <input type="text" id="quill-content" wire:model="instructions">
+                        <input type="text" id="quill-content-instructions" wire:model="instructions">
                     </div>
                     @error('instructions')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -126,7 +130,7 @@
         document.addEventListener('livewire:initialized', () => {
             // Inicializar Quill cuando Livewire esté listo
 
-                            const quill = new Quill('#quill-editor', {
+            const quillIngredients = new Quill('#quill-editor-ingredients', {
                 theme: 'snow',
                 modules: {
                     toolbar: [
@@ -161,9 +165,50 @@
             });
 
             // Actualizar el campo hidden cuando el contenido cambie
-            quill.on('text-change', function() {
-                const content = document.getElementById('quill-content');
-                content.value = quill.root.innerHTML;
+            quillIngredients.on('text-change', function() {
+                const content = document.getElementById('quill-content-ingredients');
+                content.value = quillIngredients.root.innerHTML;
+                content.dispatchEvent(new Event('input'));
+            });
+
+            const quillInstructions = new Quill('#quill-editor-instructions', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{
+                            'header': [1, 2, 3, 4, 5, 6, false]
+                        }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{
+                            'list': 'ordered'
+                        }, {
+                            'list': 'bullet'
+                        }],
+                        [{
+                            'script': 'sub'
+                        }, {
+                            'script': 'super'
+                        }],
+                        [{
+                            'indent': '-1'
+                        }, {
+                            'indent': '+1'
+                        }],
+                        [{
+                            'color': []
+                        }],
+                        [{
+                            'align': []
+                        }],
+                        ['link']
+                    ]
+                }
+            });
+
+            // Actualizar el campo hidden cuando el contenido cambie
+            quillInstructions.on('text-change', function() {
+                const content = document.getElementById('quill-content-instructions');
+                content.value = quillInstructions.root.innerHTML;
                 content.dispatchEvent(new Event('input'));
             });
         });
