@@ -16,7 +16,6 @@
                 />
                 <flux:button 
                     variant="primary" 
-                    wire:navigate 
                     href="{{ route('recipes.create') }}"
                 >
                     {{ __('Create') }}
