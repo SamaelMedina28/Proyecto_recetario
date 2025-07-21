@@ -137,44 +137,6 @@
             </div>
         </div>
     </form>
-    <style>
-        /* Override Quill styles for dark mode */
-        .dark .ql-toolbar {
-            background-color: #2d2d2f !important;
-            /* zinc-700 */
-            border-color: #52525b !important;
-            /* zinc-600 */
-        }
-
-        .dark .ql-container {
-            border-color: #52525b !important;
-            /* zinc-600 */
-        }
-
-        .dark .ql-editor {
-            color: #f4f4f5 !important;
-            /* zinc-100 */
-        }
-
-        .dark .ql-snow .ql-stroke {
-            stroke: #f4f4f5 !important;
-            /* zinc-100 */
-        }
-
-        .dark .ql-snow .ql-fill {
-            fill: #f4f4f5 !important;
-            /* zinc-100 */
-        }
-
-        .dark .ql-snow .ql-picker {
-            color: #f4f4f5 !important;
-            /* zinc-100 */
-        }
-        .dark .ql-picker-options {
-            background-color: #2d2d2f !important;
-            /* zinc-700 */
-        }
-    </style>
     <script>
         document.addEventListener('livewire:init', () => {
             let quillIngredients, quillInstructions;

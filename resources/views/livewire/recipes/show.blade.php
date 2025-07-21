@@ -76,7 +76,7 @@
             wire:click="delete({{ $recipe->id }})">
             {{ __('Delete') }}
         </flux:button>
-        <flux:button variant="primary" wire:navigate href="{{ route('dashboard', $recipe) }}">
+        <flux:button variant="primary" href="{{ route('recipes.edit', $recipe->id) }}">
             {{ __('Edit') }}
         </flux:button>
     </div>

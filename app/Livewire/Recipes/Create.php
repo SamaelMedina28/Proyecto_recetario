@@ -35,7 +35,7 @@ class Create extends Component
                 'category_id' => 'required|exists:categories,id',
                 'ingredients' => 'required',
                 'instructions' => 'required',
-                'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             ],
             [
                 'name.required' => 'El nombre es requerido',
@@ -44,7 +44,6 @@ class Create extends Component
                 'instructions.required' => 'Las instrucciones son requeridas',
                 'image_path.image' => 'La imagen debe ser un archivo de imagen',
                 'image_path.mimes' => 'La imagen debe ser de tipo jpeg, png, jpg, gif o svg',
-                'image_path.max' => 'La imagen debe pesar menos de 2MB',
             ]
         );
         
