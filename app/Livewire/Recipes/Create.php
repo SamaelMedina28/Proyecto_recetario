@@ -6,14 +6,22 @@ use App\Models\Category;
 use App\Models\Recipe;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithFileUploads;
 
 class Create extends Component
 {
+
+    use WithFileUploads;
+
     public $name;
     public $category_id;
     public $ingredients;
     public $instructions;
-    public $image_path = '';
+    public $image_path;
+    public function updatedImagePath()
+    {
+        $this->dispatch('preserve-quill-content');
+    }
     public function render()
     {
         $categories = Category::where('user_id', Auth::user()->id)->get();
@@ -39,7 +47,12 @@ class Create extends Component
                 'image_path.max' => 'La imagen debe pesar menos de 2MB',
             ]
         );
-        // dd($this->validate());
+        
+        
+        if ($this->image_path) {
+            $this->image_path = $this->image_path->store('recipes');
+        }
+
         Recipe::create([
             'user_id' => Auth::user()->id,
             'category_id' => $this->category_id,

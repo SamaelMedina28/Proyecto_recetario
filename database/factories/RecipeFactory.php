@@ -23,7 +23,6 @@ class RecipeFactory extends Factory
             'name' => $this->faker->word(),
             'ingredients' => $this->faker->paragraph(),
             'instructions' => $this->faker->paragraph(),
-            'image_path' => $this->faker->imageUrl(),
         ];
     }
 }

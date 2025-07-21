@@ -44,9 +44,9 @@
                         <!-- Imagen -->
                         <div class="w-full sm:w-32 h-32 sm:h-auto flex-shrink-0">
                             <img 
-                                src="{{ $recipe->image_url ?? 'https://img.hellofresh.com/w_3840,q_auto,f_auto,c_fill,fl_lossy/hellofresh_website/es/cms/SEO/recipes/albondigas-caseras-de-cerdo-con-salsa-barbacoa.jpeg' }}" 
+                                src="{{ $recipe->image_path ? asset('storage/' . $recipe->image_path) : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png' }}" 
                                 alt="{{ $recipe->name }}" 
-                                class="w-full h-full object-cover"
+                                class="h-full w-full sm:max-h-40 object-cover"
                             >
                         </div>
                         
@@ -70,7 +70,7 @@
                                     </svg>
                                     {{ $recipe->created_at->diffForHumans() }}
                                 </div>
-                                <flux:button variant="primary" wire:navigate href="">
+                                <flux:button variant="primary" wire:navigate href="{{ route('recipes.show', $recipe) }}">
                                     {{ __('View Recipe') }}
                                 </flux:button>
                             </div>
